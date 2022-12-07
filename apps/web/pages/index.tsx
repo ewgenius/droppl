@@ -41,11 +41,11 @@ export default function Web() {
       </Head>
 
       <div className="min-h-screen">
-        <main className="mx-auto container px-16 max-w-8xl pt-32">
-          <div className="relative flex flex-col gap-16 items-start md:flex-row md:items-center">
+        <main className="mx-auto container px-16 md:px-16 pt-16 md:pt-32">
+          <div className="flex flex-col gap-16 items-start md:flex-row md:items-center justify-center">
             <div className="relative">
               <h1
-                className="text-9xl font-bold relative transition-colors duration-300"
+                className="text-6xl md:text-9xl font-bold relative transition-colors duration-300"
                 style={{
                   color: colors[0],
                 }}
@@ -54,7 +54,7 @@ export default function Web() {
               </h1>
 
               <div
-                className="absolute top-[45px] left-[-49px] w-[120px] h-[120px] flex flex-col justify-center items-center rounded-[50%] bg-black border border-[#595a59] overflow-hidden transition-opacity duration-150"
+                className="absolute scale-[0.40] md:transform-none top-[-10px] left-[-55px] md:top-[45px] md:left-[-49px] w-[120px] h-[120px] flex flex-col justify-center items-center rounded-[50%] bg-black border border-[#595a59] overflow-hidden transition-opacity duration-150"
                 style={{
                   opacity: showPicker ? 1 : 0,
                 }}
@@ -73,7 +73,7 @@ export default function Web() {
               </div>
             </div>
 
-            <div className="relative flex flex-col gap-2 justify-center items-center">
+            <div className="hidden relative md:flex flex-col gap-2 justify-center items-center">
               <button
                 onClick={pick}
                 className="px-6 py-3 gap-4 text-lg bg-black font-mono flex justify-center items-center rounded-lg border border-zinc-800"
