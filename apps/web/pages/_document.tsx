@@ -9,7 +9,7 @@ export default function Document() {
           background: `
             linear-gradient(90deg, var(--color-inverse) 21px, transparent 1%) center,
             linear-gradient(var(--color-inverse) 21px, transparent 1%) center,
-            rgba(var(--color-inverse-rgb), 0.5)
+            rgba(var(--color-inverse-rgb), 0.7)
           `,
           backgroundPositionX: "center",
           backgroundPositionY: "center",
