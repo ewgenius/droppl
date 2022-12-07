@@ -52,26 +52,21 @@ export default function Web() {
       setShowInteractivePicker(true);
     }
   }, []);
+  
+  const onPick = () => {
+    // @ts-ignore
+    if (typeof EyeDropper === "undefined") {
+      pushColor(`#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0")}`);
+    } else {
+      setShowPicker(false);
+    }
+  };
 
   const onChange = (color?: string) => {
     setShowPicker(true);
     if (color) {
       pushColor(color);
     }
-  };
-
-  const pick = () => {
-    // @ts-ignore
-    const dropper = new EyeDropper();
-    setShowPicker(false);
-    dropper
-      .open()
-      .then(({ sRGBHex }: any) => {
-        onChange(sRGBHex);
-      })
-      .catch(() => {
-        setShowPicker(true);
-      });
   };
 
   return (
@@ -93,7 +88,7 @@ export default function Web() {
               animationTimingFunction: "ease-out",
             }}
           >
-            <App onChange={onChange} onPick={() => setShowPicker(false)} />
+            <App onChange={onChange} onPick={onPick} />
           </div>
 
           <header className="flex flex-col gap-8 md:flex-row md:items-center justify-center">
@@ -210,20 +205,25 @@ const App: FC<AppProps> = ({ onPick, onChange }) => {
   const copy = (value: string) => navigator.clipboard.writeText(value);
 
   const pick = () => {
-    // @ts-ignore
-    const dropper = new EyeDropper();
-
     onPick();
-    dropper
-      .open()
-      .then(({ sRGBHex }: any) => {
-        setColors((c) => [sRGBHex, ...c]);
-        copy(sRGBHex);
-        onChange(sRGBHex);
-      })
-      .catch(() => {
-        onChange();
-      });
+
+    try {
+      // @ts-ignore
+      const dropper = new EyeDropper();
+
+      dropper
+        .open()
+        .then(({ sRGBHex }: any) => {
+          setColors((c) => [sRGBHex, ...c]);
+          copy(sRGBHex);
+          onChange(sRGBHex);
+        })
+        .catch(() => {
+          onChange();
+        });
+    } catch (e) {
+      onChange();
+    }
   };
 
   return (
