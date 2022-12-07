@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
 function inverse(figure: number) {
   // inverse a RGB color
@@ -27,12 +27,11 @@ function hex2rgb(hex: string) {
 }
 
 export default function Web() {
-  const [showInteractivePicker, setShowInteractivePicker] = useState(false);
   const [showPicker, setShowPicker] = useState(true);
   const [colors, setColors] = useState(["#ffffff"]);
 
   const pushColor = (color: string) => {
-    setColors((c) => [color, ...c]);
+    setColors((c) => [color, ...c.slice(0, 5)]);
     const inversed = inverseColor(color);
     document.documentElement.style.setProperty("background-color", color);
     document.documentElement.style.setProperty("--color", color);
@@ -43,15 +42,6 @@ export default function Web() {
     );
     document.documentElement.style.setProperty("--color-inverse", inversed);
   };
-
-  useEffect(() => {
-    // @ts-ignore
-    if (typeof EyeDropper === "undefined") {
-      setShowInteractivePicker(false);
-    } else {
-      setShowInteractivePicker(true);
-    }
-  }, []);
   
   const onPick = () => {
     // @ts-ignore
