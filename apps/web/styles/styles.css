@@ -8,3 +8,12 @@
   --color-rgb: 255, 255, 255;
   --color-inverse-rgb: 0, 0, 0;
 }
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(-150%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
