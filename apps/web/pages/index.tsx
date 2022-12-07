@@ -81,7 +81,7 @@ export default function Web() {
             <App onChange={onChange} onPick={onPick} />
           </div>
 
-          <header className="flex flex-col gap-8 md:flex-row md:items-center justify-center">
+          <header className="flex flex-col gap-8 lg:flex-row md:items-center justify-center">
             {/* h1 */}
             <div className="relative">
               <p
@@ -128,7 +128,7 @@ export default function Web() {
               <img
                 src="/icon.svg"
                 alt="logo"
-                className="w-20 md:w-36 h-20 md:h-36 shadow-md rounded-[2.5rem]"
+                className="w-20 md:w-36 h-20 md:h-36 shadow-md rounded-3xl md:rounded-[2.5rem]"
               />
               <div className="absolute top-24 md:top-40 flex flex-col">
                 {colors.length > 1 &&
