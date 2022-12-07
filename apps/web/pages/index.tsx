@@ -128,9 +128,9 @@ export default function Web() {
               <img
                 src="/icon.svg"
                 alt="logo"
-                className="w-20 md:w-32 h-20 md:h-32"
+                className="w-20 md:w-36 h-20 md:h-36 shadow-md rounded-[2.5rem]"
               />
-              <div className="absolute top-24 md:top-36 flex flex-col">
+              <div className="absolute top-24 md:top-40 flex flex-col">
                 {colors.length > 1 &&
                   colors.slice(0, 5).map((color, i) => {
                     const inverted = inverseColor(color);
