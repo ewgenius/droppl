@@ -2,6 +2,18 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
+function inverse(figure: number) {
+  // inverse a RGB color
+  return (figure & 0x000000) | (~figure & 0xffffff);
+}
+
+function inverseColor(color: string) {
+  return `#${inverse(parseInt(color.substring(1), 16))
+    .toString(16)
+    .padStart(6, "0")
+    .toUpperCase()}`;
+}
+
 function hex2rgb(hex: string) {
   const r16 = hex.slice(1, 2);
   const g16 = hex.slice(2, 3);
@@ -18,6 +30,7 @@ export default function Web() {
   const [showInteractivePicker, setShowInteractivePicker] = useState(false);
   const [showPicker, setShowPicker] = useState(true);
   const [colors, setColors] = useState(["#ffffff"]);
+  const bg = inverseColor(colors[0]);
   const pushColor = (color: string) => setColors((c) => [color, ...c]);
 
   useEffect(() => {
@@ -50,7 +63,12 @@ export default function Web() {
         <title>Droppl</title>
       </Head>
 
-      <div className="min-h-screen">
+      <div
+        className="min-h-screen transition-colors duration-300"
+        style={{
+          backgroundColor: bg,
+        }}
+      >
         <main className="mx-auto container px-16 md:px-16 pt-16 md:pt-32">
           <div className="flex flex-col gap-16 items-start md:flex-row md:items-center justify-center">
             <div className="relative">
@@ -64,9 +82,10 @@ export default function Web() {
               </h1>
 
               <div
-                className="absolute scale-[0.40] md:transform-none top-[-10px] left-[-55px] md:top-[45px] md:left-[-49px] w-[120px] h-[120px] flex flex-col justify-center items-center rounded-[50%] bg-black border border-[#595a59] overflow-hidden transition-opacity duration-150"
+                className="absolute scale-[0.40] md:transform-none top-[-10px] left-[-55px] md:top-[45px] md:left-[-49px] w-[120px] h-[120px] flex flex-col justify-center items-center rounded-[50%] border border-[#595a59] overflow-hidden transition-all duration-300"
                 style={{
                   opacity: showPicker ? 1 : 0,
+                  backgroundColor: bg,
                 }}
               >
                 <div
@@ -83,10 +102,13 @@ export default function Web() {
               </div>
             </div>
 
-            {(
-              <div className="hidden relative md:flex flex-col gap-2 justify-center items-center transition-opacity duration-300" style={{
-                opacity: showInteractivePicker ? 1 : 0
-              }}>
+            {
+              <div
+                className="hidden relative md:flex flex-col gap-2 justify-center items-center transition-opacity duration-300"
+                style={{
+                  opacity: showInteractivePicker ? 1 : 0,
+                }}
+              >
                 <button
                   onClick={pick}
                   className="px-6 py-3 gap-4 text-lg bg-black font-mono flex justify-center items-center rounded-lg border border-zinc-800"
@@ -97,14 +119,19 @@ export default function Web() {
 
                 <div className="absolute top-16 flex flex-col">
                   {colors.length > 1 &&
-                    colors.slice(0, 8).map((color, i) => (
+                    colors.slice(0, 5).map((color, i) => (
                       <div
                         key={i}
+                        className="relative px-2 py-1 flex justify-center items-center gap-2 font-mono text-xs rounded border border-zinc-900 transition-colors duration-300"
                         style={{
-                          opacity: (5 - i) / 5,
-                          transform: `scale(${(10 - i) / 10})`,
+                          opacity: (8 - i) / 5,
+                          transform: `translateY(${-i * 16}px) scale(${
+                            (10 - i) / 10
+                          })`,
+                          zIndex: 8 - i,
+                          color: inverseColor(color),
+                          backgroundColor: color,
                         }}
-                        className="relative px-2 py-1 flex justify-center items-center gap-2 font-mono text-xs rounded border border-zinc-900"
                       >
                         {i === 0 && (
                           <svg
@@ -113,7 +140,7 @@ export default function Web() {
                             fill="none"
                             viewBox="0 0 24 24"
                             strokeWidth={1.5}
-                            stroke="currentColor"
+                            stroke={color}
                           >
                             <path
                               strokeLinecap="round"
@@ -125,14 +152,14 @@ export default function Web() {
 
                         {color}
                         <div
-                          className="w-3 h-3 rounded-sm shadow shadow-stone-700"
-                          style={{ background: color }}
+                          className="w-3 h-3 rounded-sm border"
+                          style={{ background: color, borderColor: inverseColor(color) }}
                         />
                       </div>
                     ))}
                 </div>
               </div>
-            )}
+            }
           </div>
         </main>
       </div>
