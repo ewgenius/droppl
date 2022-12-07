@@ -34,12 +34,23 @@ export default function Web() {
   const pushColor = (color: string) => setColors((c) => [color, ...c]);
 
   useEffect(() => {
+    let timer: NodeJS.Timer;
+
     // @ts-ignore
     if (typeof EyeDropper === "undefined") {
       setShowInteractivePicker(false);
+      // timer = setInterval(() => {
+      //   pushColor(
+      //     Math.round(Math.random() * 16777215)
+      //       .toString(16)
+      //       .padStart(6, "0")
+      //   );
+      // }, 3000);
     } else {
       setShowInteractivePicker(true);
     }
+
+    return () => clearInterval(timer);
   }, []);
 
   const pick = () => {
@@ -153,7 +164,10 @@ export default function Web() {
                         {color}
                         <div
                           className="w-3 h-3 rounded-sm border"
-                          style={{ background: color, borderColor: inverseColor(color) }}
+                          style={{
+                            background: color,
+                            borderColor: inverseColor(color),
+                          }}
                         />
                       </div>
                     ))}
