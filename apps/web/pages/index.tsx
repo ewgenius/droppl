@@ -86,15 +86,16 @@ export default function Web() {
             <div className="relative">
               <p
                 style={{ color: "var(--color)" }}
-                className="opacity-75 absolute -top-8 left-3 text-xl"
+                className="opacity-75 absolute -top-6 left-1 md:left-2 text-md md:text-xl"
               >
                 simple color picker
               </p>
 
               <h1
-                className="text-6xl antialiased md:text-9xl font-bold relative transition-colors duration-300"
+                className="text-8xl antialiased md:text-[12rem] leading-[1] font-bold relative transition-colors duration-300"
                 style={{
                   color: "var(--color)",
+                  fontVariationSettings: `"wght" 600`,
                 }}
               >
                 Droppl
@@ -102,7 +103,7 @@ export default function Web() {
 
               {/* pseudo picker */}
               <div
-                className="absolute scale-[0.40] md:transform-none top-[-10px] left-[-55px] md:top-[45px] md:left-[-49px] w-[120px] h-[120px] flex flex-col justify-center items-center rounded-[50%] border border-[#595a59] overflow-hidden"
+                className="absolute scale-[0.40] md:transform-none top-[22px] left-[-55px] md:top-[103px] md:left-[-49px] w-[120px] h-[120px] flex flex-col justify-center items-center rounded-[50%] border border-[#595a59] overflow-hidden"
                 style={{
                   opacity: showPicker ? 1 : 0,
                   backgroundColor: "var(--color-inverse)",

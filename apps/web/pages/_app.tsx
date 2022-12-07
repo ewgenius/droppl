@@ -3,7 +3,7 @@ import localFont from "@next/font/local";
 import "../styles/styles.css";
 import Head from "next/head";
 
-const MonaSans = localFont({ src: "./Mona-Sans.woff2" });
+const Font = localFont({ src: "./SpaceGrotesk[wght].woff2" });
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -46,7 +46,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
       <style jsx global>{`
         html {
-          font-family: ${MonaSans.style.fontFamily};
+          font-family: ${Font.style.fontFamily};
         }
       `}</style>
       <Component {...pageProps} />
