@@ -55,7 +55,7 @@ export default function Web() {
           <div className="flex flex-col gap-16 items-start md:flex-row md:items-center justify-center">
             <div className="relative">
               <h1
-                className="text-6xl md:text-9xl font-bold relative transition-colors duration-300"
+                className="text-6xl antialiased md:text-9xl font-bold relative transition-colors duration-300"
                 style={{
                   color: colors[0],
                 }}
