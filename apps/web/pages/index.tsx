@@ -31,7 +31,15 @@ export default function Web() {
   const [showPicker, setShowPicker] = useState(true);
   const [colors, setColors] = useState(["#ffffff"]);
   const bg = inverseColor(colors[0]);
-  const pushColor = (color: string) => setColors((c) => [color, ...c]);
+
+  const pushColor = (color: string) => {
+    setColors((c) => [color, ...c]);
+    document.documentElement.style.setProperty("--color", color);
+    document.documentElement.style.setProperty(
+      "--color-inverse",
+      inverseColor(color)
+    );
+  };
 
   useEffect(() => {
     let timer: NodeJS.Timer;
@@ -86,7 +94,7 @@ export default function Web() {
               <h1
                 className="text-6xl antialiased md:text-9xl font-bold relative transition-colors duration-300"
                 style={{
-                  color: colors[0],
+                  color: "var(--color)",
                 }}
               >
                 Droppl
@@ -96,18 +104,18 @@ export default function Web() {
                 className="absolute scale-[0.40] md:transform-none top-[-10px] left-[-55px] md:top-[45px] md:left-[-49px] w-[120px] h-[120px] flex flex-col justify-center items-center rounded-[50%] border border-[#595a59] overflow-hidden transition-all duration-300"
                 style={{
                   opacity: showPicker ? 1 : 0,
-                  backgroundColor: bg,
+                  backgroundColor: "var(--color-inverse)",
                 }}
               >
                 <div
                   className="bg-white absolute w-[62px] h-[62px] border-[#eaeaea] top-0 right-0 transition-colors duration-300"
                   style={{
-                    background: colors[0],
-                    borderColor: colors[0],
+                    background: "var(--color)",
+                    borderColor: "var(--color)",
                   }}
                 />
                 <div className="bg-white border border-[#999] absolute bottom-[55px] left-[55px] z-10 w-[8px] h-[8px]" />
-                <span className="bg-[#575757] w-[80px] h-[18px] py-[1px] font-sans mt-[52px] text-[11px] leading-[16px] text-center rounded-[6px]">
+                <span className="bg-[#575757] text-white w-[80px] h-[18px] py-[1px] font-sans mt-[52px] text-[11px] leading-[16px] text-center rounded-[6px]">
                   {hex2rgb(colors[0])}
                 </span>
               </div>
@@ -122,7 +130,7 @@ export default function Web() {
               >
                 <button
                   onClick={pick}
-                  className="px-6 py-3 gap-4 text-lg bg-black font-mono flex justify-center items-center rounded-lg border border-zinc-800"
+                  className="text-white px-5 py-3 gap-4 text-lg bg-black font-mono flex justify-center items-center rounded-lg border border-zinc-800"
                 >
                   pick
                   <img src="/icon.svg" alt="logo" className="w-6 h-6" />
@@ -130,47 +138,50 @@ export default function Web() {
 
                 <div className="absolute top-16 flex flex-col">
                   {colors.length > 1 &&
-                    colors.slice(0, 5).map((color, i) => (
-                      <div
-                        key={i}
-                        className="relative px-2 py-1 flex justify-center items-center gap-2 font-mono text-xs rounded border border-zinc-900 transition-colors duration-300"
-                        style={{
-                          opacity: (8 - i) / 5,
-                          transform: `translateY(${-i * 16}px) scale(${
-                            (10 - i) / 10
-                          })`,
-                          zIndex: 8 - i,
-                          color: inverseColor(color),
-                          backgroundColor: color,
-                        }}
-                      >
-                        {i === 0 && (
-                          <svg
-                            className="w-3 h-3 absolute left-[-16px]"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke={color}
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                            />
-                          </svg>
-                        )}
-
-                        {color}
+                    colors.slice(0, 5).map((color, i) => {
+                      const inverted = inverseColor(color);
+                      return (
                         <div
-                          className="w-3 h-3 rounded-sm border"
+                          key={i}
+                          className="relative px-2 py-1 flex justify-center items-center gap-2 font-mono text-xs rounded border border-zinc-900 transition-colors duration-300"
                           style={{
-                            background: color,
-                            borderColor: inverseColor(color),
+                            opacity: (8 - i) / 5,
+                            transform: `translateY(${-i * 16}px) scale(${
+                              (10 - i) / 10
+                            })`,
+                            zIndex: 8 - i,
+                            color: inverted,
+                            backgroundColor: color,
                           }}
-                        />
-                      </div>
-                    ))}
+                        >
+                          {i === 0 && (
+                            <svg
+                              className="w-3 h-3 absolute left-[-16px]"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke={color}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                              />
+                            </svg>
+                          )}
+
+                          {color}
+                          <div
+                            className="w-3 h-3 rounded-sm border"
+                            style={{
+                              background: color,
+                              borderColor: inverted,
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             }
