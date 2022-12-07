@@ -45,28 +45,32 @@ export default function Web() {
           <div className="relative flex flex-col gap-16 items-start md:flex-row md:items-center">
             <div className="relative">
               <h1
-                className="text-9xl font-bold relative"
+                className="text-9xl font-bold relative transition-colors duration-300"
                 style={{
                   color: colors[0],
                 }}
               >
                 Droppl
               </h1>
-              {showPicker && (
-                <div className="absolute top-[45px] left-[-49px] w-[120px] h-[120px] flex flex-col justify-center items-center rounded-[50%] bg-black border border-[#595a59] overflow-hidden">
-                  <div
-                    className="bg-white absolute w-[62px] h-[62px] border-l-[6px] border-b-[6px] border-[#eaeaea] top-0 right-0"
-                    style={{
-                      background: colors[0],
-                      borderColor: colors[0],
-                    }}
-                  />
-                  <div className="bg-white border border-[#999] absolute bottom-[55px] left-[55px] z-10 w-[8px] h-[8px]" />
-                  <span className="bg-[#575757] w-[80px] h-[18px] py-[1px] font-sans mt-[52px] text-[11px] leading-[16px] text-center rounded-[6px]">
-                    {hex2rgb(colors[0])}
-                  </span>
-                </div>
-              )}
+
+              <div
+                className="absolute top-[45px] left-[-49px] w-[120px] h-[120px] flex flex-col justify-center items-center rounded-[50%] bg-black border border-[#595a59] overflow-hidden transition-opacity duration-150"
+                style={{
+                  opacity: showPicker ? 1 : 0,
+                }}
+              >
+                <div
+                  className="bg-white absolute w-[62px] h-[62px] border-l-[6px] border-b-[6px] border-[#eaeaea] top-0 right-0 transition-colors duration-300"
+                  style={{
+                    background: colors[0],
+                    borderColor: colors[0],
+                  }}
+                />
+                <div className="bg-white border border-[#999] absolute bottom-[55px] left-[55px] z-10 w-[8px] h-[8px]" />
+                <span className="bg-[#575757] w-[80px] h-[18px] py-[1px] font-sans mt-[52px] text-[11px] leading-[16px] text-center rounded-[6px]">
+                  {hex2rgb(colors[0])}
+                </span>
+              </div>
             </div>
 
             <div className="relative flex flex-col gap-2 justify-center items-center">
@@ -104,7 +108,7 @@ export default function Web() {
                             d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
                           />
                         </svg>
-                       )}
+                      )}
 
                       {color}
                       <div
