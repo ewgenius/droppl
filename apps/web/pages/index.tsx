@@ -30,15 +30,18 @@ export default function Web() {
   const [showInteractivePicker, setShowInteractivePicker] = useState(false);
   const [showPicker, setShowPicker] = useState(true);
   const [colors, setColors] = useState(["#ffffff"]);
-  const bg = inverseColor(colors[0]);
 
   const pushColor = (color: string) => {
     setColors((c) => [color, ...c]);
+    const inversed = inverseColor(color)
+    document.documentElement.style.setProperty("background-color", color)
     document.documentElement.style.setProperty("--color", color);
+    document.documentElement.style.setProperty("--color-rgb", hex2rgb(color));
+    document.documentElement.style.setProperty("--color-inverse-rgb", hex2rgb(inversed));
     document.documentElement.style.setProperty(
       "--color-inverse",
-      inverseColor(color)
-    );
+      inversed
+      );
   };
 
   useEffect(() => {
@@ -84,9 +87,6 @@ export default function Web() {
 
       <div
         className="min-h-screen transition-colors duration-300"
-        style={{
-          backgroundColor: bg,
-        }}
       >
         <main className="mx-auto container px-16 md:px-16 pt-16 md:pt-32">
           <div className="flex flex-col gap-16 items-start md:flex-row md:items-center justify-center">
