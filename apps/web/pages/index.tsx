@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
-import { FC, useState } from "react";
+import { useState } from "react";
+import { App } from "../components/App";
 
 function inverse(figure: number) {
   // inverse a RGB color
@@ -42,11 +43,15 @@ export default function Web() {
     );
     document.documentElement.style.setProperty("--color-inverse", inversed);
   };
-  
+
   const onPick = () => {
     // @ts-ignore
     if (typeof EyeDropper === "undefined") {
-      pushColor(`#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0")}`);
+      pushColor(
+        `#${Math.floor(Math.random() * 16777215)
+          .toString(16)
+          .padStart(6, "0")}`
+      );
     } else {
       setShowPicker(false);
     }
@@ -185,101 +190,3 @@ export default function Web() {
   );
 }
 
-export interface AppProps {
-  onPick: () => void;
-  onChange: (color?: string) => void;
-}
-
-const App: FC<AppProps> = ({ onPick, onChange }) => {
-  const [colors, setColors] = useState<Array<string>>([]);
-
-  const copy = (value: string) => navigator.clipboard.writeText(value);
-
-  const pick = () => {
-    onPick();
-
-    try {
-      // @ts-ignore
-      const dropper = new EyeDropper();
-
-      dropper
-        .open()
-        .then(({ sRGBHex }: any) => {
-          setColors((c) => [sRGBHex, ...c]);
-          copy(sRGBHex);
-          onChange(sRGBHex);
-        })
-        .catch(() => {
-          onChange();
-        });
-    } catch (e) {
-      onChange();
-    }
-  };
-
-  return (
-    <div className="bg-white shadow-white w-[168px] flex flex-col text-sm font-mono">
-      <div className="flex flex-col p-2 gap-2">
-        <div className="flex gap-2">
-          <button
-            onClick={pick}
-            className="flex justify-center ring-2 ring-amber-400 items-center border border-amber-600 text-amber-600 rounded-md p-2 text-sm"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              className="w-4 h-4"
-            >
-              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
-            </svg>
-          </button>
-          <span className="flex justify-between items-center bg-gray-200 text-gray-500 flex-grow border border-gray-300 rounded-md pl-2 pr-1 py-1 text-sm">
-            <span>{colors[0]}</span>
-            <button className="border border-gray-300 bg-gray-100 rounded p-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                className="w-3 h-3"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
-            </button>
-          </span>
-        </div>
-        {colors.length > 0 && (
-          <div className="flex gap-2 flex-wrap">
-            {colors.map((color, i) => (
-              <div
-                key={i}
-                className="w-6 h-6 rounded-md border border-gray-200 shadow"
-                style={{
-                  backgroundColor: color,
-                }}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="p-2 border-t border-amber-300 bg-amber-200 text-gray-400 shadow-inner text-xs">
-        droppl, 0.0.1
-      </div>
-    </div>
-  );
-};
