@@ -27,6 +27,21 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
+
+        <meta content="Droppl" property="og:title" />
+        <meta content="Droppl" property="twitter:title" />
+        <meta content="Droppl" itemProp="name" />
+
+        <meta content="simple color picker extension" name="description" />
+        <meta
+          content="simple color picker extension"
+          property="og:description"
+        />
+        <meta content="simple color picker extension" itemProp="description" />
+        <meta
+          content="simple color picker extension"
+          property="twitter:description"
+        />
       </Head>
 
       <style jsx global>{`
