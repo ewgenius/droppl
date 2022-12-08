@@ -1,3 +1,5 @@
+const { fontFamily } = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -5,7 +7,11 @@ module.exports = {
     "../../packages/ui/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        mono: ["JetBrainsMono", ...fontFamily.mono],
+      },
+    },
   },
   plugins: [],
 }

@@ -3,7 +3,13 @@ import localFont from "@next/font/local";
 import "../styles/styles.css";
 import Head from "next/head";
 
-const Font = localFont({ src: "./SpaceGrotesk[wght].woff2" });
+const Sans = localFont({ src: "./SpaceGrotesk[wght].woff2" });
+const Mono = localFont({
+  src: "./JetBrainsMono-Regular.woff2",
+  variable: "--font-mono",
+});
+
+console.log(Mono.variable);
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -44,12 +50,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
 
-      <style jsx global>{`
-        html {
-          font-family: ${Font.style.fontFamily};
-        }
-      `}</style>
-      <Component {...pageProps} />
+      <div className={`${Sans.className} ${Mono.variable}`}>
+        <Component {...pageProps} />
+      </div>
     </>
   );
 }

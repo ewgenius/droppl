@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
 
 export interface AppProps {
-  onPick: () => void;
-  onChange: (color?: string) => void;
+  onPick?: () => void;
+  onChange?: (color?: string) => void;
 }
 
 export const App: FC<AppProps> = ({ onPick, onChange }) => {
@@ -12,7 +12,7 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
   const copy = (value: string) => navigator.clipboard.writeText(value);
 
   const pick = () => {
-    onPick();
+    onPick && onPick();
 
     try {
       // @ts-ignore
@@ -24,13 +24,13 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
           setColors((c) => [sRGBHex, ...c]);
           selectColor(sRGBHex);
           copy(sRGBHex);
-          onChange(sRGBHex);
+          onChange && onChange(sRGBHex);
         })
         .catch(() => {
-          onChange();
+          onChange && onChange();
         });
     } catch (e) {
-      onChange();
+      onChange && onChange();
     }
   };
 
