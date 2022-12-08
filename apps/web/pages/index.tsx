@@ -121,7 +121,9 @@ export default function Web() {
                     borderColor: "var(--color)",
                   }}
                 />
-                <div className="bg-white border border-[#999] absolute bottom-[55px] left-[55px] z-10 w-[8px] h-[8px]" />
+                <div className="border border-[#999] absolute bottom-[55px] left-[55px] z-10 w-[8px] h-[8px]" style={{
+                  backgroundColor: "var(--color)"
+                }} />
                 <span className="bg-[#575757] text-white w-[80px] h-[18px] py-[1px] font-sans mt-[52px] text-[11px] leading-[16px] text-center rounded-[6px]">
                   {hex2rgb(colors[0])}
                 </span>
