@@ -50,9 +50,9 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className="w-4 h-4"
             >
               <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
@@ -68,9 +68,9 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="w-3 h-3"
               >
                 <circle cx="12" cy="12" r="10"></circle>
