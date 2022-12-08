@@ -37,7 +37,7 @@ export default function Web() {
   useEffect(() => {
     const color = getComputedStyle(document.documentElement).getPropertyValue(
       "--color"
-    );
+    ).trim();
 
     setColors([color.slice(1)]);
 
