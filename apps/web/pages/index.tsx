@@ -39,7 +39,7 @@ export default function Web() {
       "--color"
     ).trim();
 
-    setColors([color.slice(1)]);
+    setColors([(color.startsWith("#") ? color.slice(1) : color).toUpperCase()]);
 
     // @ts-ignore
     if (typeof EyeDropper === "undefined") {
