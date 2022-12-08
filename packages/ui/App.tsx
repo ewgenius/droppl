@@ -8,6 +8,8 @@ export interface AppProps {
 export const App: FC<AppProps> = ({ onPick, onChange }) => {
   const [colors, setColors] = useState<Array<string>>([]);
   const [selectedColor, selectColor] = useState<string>();
+  const [showDetails, setShowDetails] = useState(false);
+  const toggleDetails = () => setShowDetails(s => !s);
 
   const copy = (value: string) => navigator.clipboard.writeText(value);
 
@@ -59,7 +61,7 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
           </button>
           <span className="flex justify-between items-center shadow-inner bg-gray-200 text-gray-500 flex-grow border border-gray-300 rounded-md pl-2 pr-1 py-1 text-sm">
             <span>{selectedColor || "#......"}</span>
-            <button className="border border-gray-300 bg-gray-100 rounded p-1 hover:ring-1 hover:bg-gray-200 active:ring-2 ring-zinc-300 transition-shadow duration-300">
+            <button onClick={toggleDetails} className="border border-gray-300 bg-gray-100 rounded p-1 hover:ring-1 hover:bg-gray-50 active:ring-2 ring-zinc-300 transition-all duration-300">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -81,7 +83,7 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
         </div>
       </div>
 
-      {selectedColor && (
+      {selectedColor && showDetails && (
         <div className="flex flex-col gap-2 px-2">
           <div className="bg-zinc-700 flex flex-col gap-1 p-2 text-zinc-100 rounded-lg shadow-inner text-[0.65rem]">
             <div
