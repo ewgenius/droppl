@@ -3,7 +3,15 @@ import { Html, Head, Main, NextScript } from "next/document";
 export default function Document() {
   return (
     <Html className="overflow-hidden">
-      <Head />
+      <Head>
+        <script
+          async
+          defer
+          data-website-id="aedaeeb6-524c-4593-832a-c67e1f3e3607"
+          data-domains="droppl.me"
+          src="https://analytics.ewgenius.me/umami.js"
+        ></script>
+      </Head>
       <body
         style={{
           background: `
