@@ -1,6 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Droppl",
+  "description": "Simple color picker",
   "version": "0.0.1",
   "icons": {
     "16": "icons/extension_icon@16px.png",

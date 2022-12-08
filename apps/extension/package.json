@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "build": "parcel build manifest.json --config @parcel/config-webextension",
+    "build": "rm -rf dist && parcel build manifest.json --config @parcel/config-webextension",
     "watch": "parcel watch manifest.json --host localhost --config @parcel/config-webextension",
     "dev": "parcel src/index.html"
   },
