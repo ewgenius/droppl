@@ -148,9 +148,12 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
         </div>
       )}
 
-      <div className={classnames("relative py-1 px-2 border-t border-amber-300 bg-amber-200 text-gray-400 shadow-inner text-[0.65rem] transition-colors duration-300", 
-      copied && "border-green-300"
-      )}>
+      <div
+        className={classnames(
+          "relative py-1 px-2 border-t border-amber-300 bg-amber-200 text-gray-400 shadow-inner text-[0.65rem] transition-colors duration-300",
+          copied && "border-green-300"
+        )}
+      >
         droppl, 0.0.1
         <div
           className={classnames(
