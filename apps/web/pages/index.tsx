@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { App } from "ui/App";
 
 function inverse(figure: number) {
@@ -29,7 +29,15 @@ function hex2rgb(hex: string) {
 
 export default function Web() {
   const [showPicker, setShowPicker] = useState(true);
-  const [colors, setColors] = useState(["#ffffff"]);
+  const [colors, setColors] = useState<Array<string>>(["#000000"]);
+
+  useEffect(() => {
+    const color = getComputedStyle(document.documentElement).getPropertyValue(
+      "--color"
+    );
+
+    setColors([color.slice(1)]);
+  }, []);
 
   const pushColor = (color: string) => {
     setColors((c) => [color, ...c.slice(0, 5)]);
@@ -121,9 +129,12 @@ export default function Web() {
                     borderColor: "var(--color)",
                   }}
                 />
-                <div className="border border-[#999] absolute bottom-[55px] left-[55px] z-10 w-[8px] h-[8px]" style={{
-                  backgroundColor: "var(--color)"
-                }} />
+                <div
+                  className="border border-[#999] absolute bottom-[55px] left-[55px] z-10 w-[8px] h-[8px]"
+                  style={{
+                    backgroundColor: "var(--color)",
+                  }}
+                />
                 <span className="bg-[#575757] text-white w-[80px] h-[18px] py-[1px] font-sans mt-[52px] text-[11px] leading-[16px] text-center rounded-[6px]">
                   {hex2rgb(colors[0])}
                 </span>
@@ -191,4 +202,3 @@ export default function Web() {
     </>
   );
 }
-

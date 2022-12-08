@@ -9,8 +9,6 @@ const Mono = localFont({
   variable: "--font-mono",
 });
 
-console.log(Mono.variable);
-
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
