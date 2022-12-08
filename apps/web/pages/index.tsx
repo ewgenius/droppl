@@ -30,6 +30,7 @@ function hex2rgb(hex: string) {
 }
 
 export default function Web() {
+  const [unsupported, setUnsupported] = useState(false);
   const [showPicker, setShowPicker] = useState(true);
   const [colors, setColors] = useState<Array<string>>(["#000000"]);
 
@@ -39,6 +40,11 @@ export default function Web() {
     );
 
     setColors([color.slice(1)]);
+
+    // @ts-ignore
+    if (typeof EyeDropper === "undefined") {
+      setUnsupported(true);
+    }
   }, []);
 
   const pushColor = (color: string) => {
@@ -199,6 +205,19 @@ export default function Web() {
               </div>
             </div>
           </header>
+
+          {
+            <div
+              className={`p-4 absolute bottom-0 m-2 transition-all ${
+                unsupported
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-32"
+              } duration-300 rounded-lg bg-white text-black text-sm mt-8`}
+            >
+              Note: The extension uses an experimental API, so only
+              Chromium-based browsers are supported.
+            </div>
+          }
         </main>
       </div>
     </>
