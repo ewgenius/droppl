@@ -1,7 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { App } from "ui/App";
+
+const App = dynamic(() => import("ui/App"));
 
 function inverse(figure: number) {
   // inverse a RGB color

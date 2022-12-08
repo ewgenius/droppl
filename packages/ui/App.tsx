@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 
 export interface AppProps {
   onPick?: () => void;
@@ -11,10 +11,20 @@ function classnames(...classes: Array<string | null | undefined | boolean>) {
 
 export const App: FC<AppProps> = ({ onPick, onChange }) => {
   const [copied, setCopied] = useState(false);
-  const [colors, setColors] = useState<Array<string>>([]);
+  const [colors, setColors] = useState<
+    Record<string, { color: string; order: number }>
+  >({});
   const [selectedColor, selectColor] = useState<string>();
-  const [showDetails, setShowDetails] = useState(false);
-  const toggleDetails = () => setShowDetails((s) => !s);
+
+  useEffect(() => {
+    const initialState = localStorage.getItem("droppl.palette");
+    if (initialState) {
+      try {
+        const parsed = JSON.parse(initialState);
+        setColors(parsed);
+      } catch (e) {}
+    }
+  }, []);
 
   const copy = useCallback((value: string, indicate = false) => {
     navigator.clipboard.writeText(value);
@@ -40,7 +50,23 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
       dropper
         .open()
         .then(({ sRGBHex }: any) => {
-          setColors((c) => [sRGBHex, ...c.slice(0, 19)]);
+          setColors((c) => {
+            if (!!c[sRGBHex]) {
+              return c;
+            }
+
+            const newState = {
+              ...c,
+              [sRGBHex]: {
+                color: sRGBHex,
+                order: Object.keys(c).length,
+              },
+            };
+
+            localStorage.setItem("droppl.palette", JSON.stringify(newState));
+
+            return newState;
+          });
           selectColor(sRGBHex);
           copy(sRGBHex, true);
           onChange && onChange(sRGBHex);
@@ -77,7 +103,11 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
             </svg>
           </button>
 
-          <button onClick={() => copy(selectedColor, true)} className="flex relative overflow-hidden justify-between items-center shadow-inner bg-zinc-800 text-zinc-300 flex-grow border border-zinc-500 rounded-lg pl-2 pr-2 py-1 text-sm">
+          <button
+            disabled={!selectedColor}
+            onClick={() => selectedColor && copy(selectedColor, true)}
+            className="flex relative overflow-hidden justify-between items-center shadow-inner bg-zinc-800 text-zinc-300 flex-grow border border-zinc-500 rounded-lg pl-2 pr-2 py-1 text-sm"
+          >
             <span>{selectedColor || "#......"}</span>
 
             {selectedColor && (
@@ -91,7 +121,7 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
 
             <div
               className={classnames(
-                "absolute inset-0 bg-green-600 text-green-100 w-full h-full shadow-inner flex justify-center items-center gap-1 transition-opacity duration-150",
+                "absolute inset-0 bg-green-600 text-green-100 w-full h-full shadow-inner flex justify-center items-center gap-1 transition-opacity duration-75",
                 copied ? "opacity-100 z-0" : "opacity-0 -z-10"
               )}
             >
@@ -115,47 +145,55 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
         </div>
       </div>
 
-      {selectedColor && showDetails && (
-        <div className="flex flex-col gap-2 p-2">
-          <div className="bg-zinc-900 flex flex-col gap-1 p-2 text-zinc-100 rounded-lg shadow-inner text-[0.65rem]">
-            {/* <div
-              className="h-8 m-0.5 rounded ring-2 ring-zinc-800 shadow-inner transition-colors duration-300"
-              style={{
-                backgroundColor: selectedColor,
-              }}
-            /> */}
-
-            <div>
-              <div className="flex justify-between">
-                <span>hsl:</span>
-                {selectedColor}
-              </div>
-              <div className="flex justify-between">
-                <span>hex:</span>
-                {selectedColor}
-              </div>
-              <div className="flex justify-between">
-                <span>rgb:</span>
-                {selectedColor}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {colors.length > 0 && (
+      {Object.keys(colors).length > 0 && (
         <div className="flex flex-col p-2 pb-3 gap-2">
           <div className="flex gap-2 flex-wrap">
-            {colors.map((color, i) => (
-              <button
-                key={colors.length - i - 1}
-                onClick={() => selectColor(color)}
-                className="w-6 h-6 rounded-md shadow ring-1 ring-zinc-500 hover:ring-2 active:ring-4 hover:ring-amber-400 transition-shadow duration-300"
-                style={{
-                  backgroundColor: color,
-                }}
-              />
-            ))}
+            {Object.keys(colors)
+              .map((key) => colors[key])
+              .sort((a, b) => b.order - a.order)
+              .map((color) => {
+                return (
+                  <button
+                    key={color.color}
+                    onClick={() => selectColor(color.color)}
+                    className={classnames(
+                      "w-6 h-6 rounded-md shadow hover:ring-2 active:ring-4 hover:ring-amber-400 transition-shadow duration-300",
+                      selectedColor === color.color
+                        ? "ring-2 ring-amber-500"
+                        : "ring-1 ring-zinc-500"
+                    )}
+                    style={{
+                      backgroundColor: color.color,
+                    }}
+                  />
+                );
+              })}
+
+            <button
+              onClick={() => {
+                setColors({});
+                localStorage.setItem("droppl.palette", "{}");
+              }}
+              className="w-6 h-6 ring-1 ring-zinc-500 text-zinc-500 hover:text-amber-400 flex flex-col justify-center items-center rounded-md shadow hover:ring-2 active:ring-4 hover:ring-amber-400 transition-all duration-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-3 h-3"
+              >
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+            </button>
           </div>
         </div>
       )}
@@ -166,3 +204,5 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
     </div>
   );
 };
+
+export default App;
