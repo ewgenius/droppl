@@ -1,17 +1,34 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useState } from "react";
 
 export interface AppProps {
   onPick?: () => void;
   onChange?: (color?: string) => void;
 }
 
+function classnames(...classes: Array<string | null | undefined | boolean>) {
+  return classes.filter(Boolean).join(" ");
+}
+
 export const App: FC<AppProps> = ({ onPick, onChange }) => {
+  const [copied, setCopied] = useState(false);
   const [colors, setColors] = useState<Array<string>>([]);
   const [selectedColor, selectColor] = useState<string>();
   const [showDetails, setShowDetails] = useState(false);
-  const toggleDetails = () => setShowDetails(s => !s);
+  const toggleDetails = () => setShowDetails((s) => !s);
 
-  const copy = (value: string) => navigator.clipboard.writeText(value);
+  const copy = useCallback((value: string, indicate = false) => {
+    navigator.clipboard.writeText(value);
+
+    if (indicate) {
+      setCopied(true);
+      const t = setTimeout(() => setCopied(false), 1000);
+
+      return () => {
+        setCopied(false);
+        clearTimeout(t);
+      };
+    }
+  }, []);
 
   const pick = () => {
     onPick && onPick();
@@ -25,7 +42,7 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
         .then(({ sRGBHex }: any) => {
           setColors((c) => [sRGBHex, ...c]);
           selectColor(sRGBHex);
-          copy(sRGBHex);
+          copy(sRGBHex, true);
           onChange && onChange(sRGBHex);
         })
         .catch(() => {
@@ -61,7 +78,10 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
           </button>
           <span className="flex justify-between items-center shadow-inner bg-gray-200 text-gray-500 flex-grow border border-gray-300 rounded-md pl-2 pr-1 py-1 text-sm">
             <span>{selectedColor || "#......"}</span>
-            <button onClick={toggleDetails} className="border border-gray-300 bg-gray-100 rounded p-1 hover:ring-1 hover:bg-gray-50 active:ring-2 ring-zinc-300 transition-all duration-300">
+            <button
+              onClick={toggleDetails}
+              className="border border-gray-300 bg-gray-100 rounded p-1 hover:ring-1 hover:bg-gray-50 active:ring-2 ring-zinc-300 transition-all duration-300"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -128,8 +148,32 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
         </div>
       )}
 
-      <div className="py-1 px-2 border-t border-amber-300 bg-amber-200 text-gray-400 shadow-inner text-[0.65rem]">
+      <div className={classnames("relative py-1 px-2 border-t border-amber-300 bg-amber-200 text-gray-400 shadow-inner text-[0.65rem] transition-colors duration-300", 
+      copied && "border-green-300"
+      )}>
         droppl, 0.0.1
+        <div
+          className={classnames(
+            "absolute opacity-0 inset-0 bg-green-300 text-green-500 w-full h-full shadow-inner flex justify-center items-center gap-1 transition-opacity",
+            copied && "opacity-100"
+          )}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-3 h-3"
+          >
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          copied!
+        </div>
       </div>
     </div>
   );
