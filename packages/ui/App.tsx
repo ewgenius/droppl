@@ -40,7 +40,7 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
       dropper
         .open()
         .then(({ sRGBHex }: any) => {
-          setColors((c) => [sRGBHex, ...c]);
+          setColors((c) => [sRGBHex, ...c.slice(0, 19)]);
           selectColor(sRGBHex);
           copy(sRGBHex, true);
           onChange && onChange(sRGBHex);
