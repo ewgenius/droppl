@@ -57,9 +57,9 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
               <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
             </svg>
           </button>
-          <span className="flex justify-between items-center bg-gray-200 text-gray-500 flex-grow border border-gray-300 rounded-md pl-2 pr-1 py-1 text-sm">
+          <span className="flex justify-between items-center shadow-inner bg-gray-200 text-gray-500 flex-grow border border-gray-300 rounded-md pl-2 pr-1 py-1 text-sm">
             <span>{selectedColor || "#......"}</span>
-            <button className="border border-gray-300 bg-gray-100 rounded p-1">
+            <button className="border border-gray-300 bg-gray-100 rounded p-1 hover:ring-1 hover:bg-gray-200 active:ring-2 ring-zinc-300 transition-shadow duration-300">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -85,7 +85,7 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
         <div className="flex flex-col gap-2 px-2">
           <div className="bg-zinc-700 flex flex-col gap-1 p-2 text-zinc-100 rounded-lg shadow-inner text-[0.65rem]">
             <div
-              className="h-8 m-0.5 rounded ring-2 ring-zinc-600"
+              className="h-8 m-0.5 rounded ring-2 ring-zinc-800 shadow-inner transition-colors duration-300"
               style={{
                 backgroundColor: selectedColor,
               }}
