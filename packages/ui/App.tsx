@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { FC, useState } from "react";
 
 export interface AppProps {

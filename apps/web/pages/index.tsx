@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
 import { useState } from "react";
-import { App } from "../components/App";
+import { App } from "ui/App";
 
 function inverse(figure: number) {
   // inverse a RGB color
