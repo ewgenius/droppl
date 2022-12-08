@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Droppl",
+  "version": "0.0.1",
+  "icons": {
+    "16": "icons/extension_icon@16px.png",
+    "32": "icons/extension_icon@32px.png",
+    "48": "icons/extension_icon@48px.png",
+    "128": "icons/extension_icon@128px.png"
+  },
+  "action": {
+    "default_popup": "src/index.html"
+  }
+}
