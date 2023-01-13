@@ -80,12 +80,12 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
   };
 
   return (
-    <div className="bg-zinc-800 text-white w-[168px] flex flex-col text-sm font-mono">
+    <div className="bg-gray-1 text-gray-12 w-[168px] flex flex-col text-sm font-mono">
       <div className="flex flex-col p-2 gap-2">
         <div className="flex gap-2">
           <button
             onClick={pick}
-            className="flex justify-center ring-1 ring-amber-500 hover:ring-2 active:ring-4 bg-amber-400 hover:bg-amber-400 items-center border border-amber-600 text-amber-600 rounded-md p-2 text-sm transition-all duration-300"
+            className="relative overflow-hidden bg-gray-3 border border-gray-7 rounded-md hover:bg-gray-4 hover:border-gray-8 flex justify-center items-center rounded-md p-2 text-sm transition-colors duration-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -101,27 +101,10 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
             >
               <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
             </svg>
-          </button>
-
-          <button
-            disabled={!selectedColor}
-            onClick={() => selectedColor && copy(selectedColor, true)}
-            className="flex relative overflow-hidden justify-between items-center shadow-inner bg-zinc-800 text-zinc-300 flex-grow border border-zinc-500 rounded-lg pl-2 pr-2 py-1 text-sm"
-          >
-            <span>{selectedColor || "#......"}</span>
-
-            {selectedColor && (
-              <div
-                className="w-4 h-4 rounded shadow ring-1 ring-zinc-500 transition-colors duration-300"
-                style={{
-                  backgroundColor: selectedColor,
-                }}
-              />
-            )}
 
             <div
               className={classnames(
-                "absolute inset-0 bg-green-600 text-green-100 w-full h-full shadow-inner flex justify-center items-center gap-1 transition-opacity duration-75",
+                "absolute bg-green-9 text-green-12 w-full h-full shadow-inner flex justify-center items-center gap-1 transition-opacity duration-75",
                 copied ? "opacity-100 z-0" : "opacity-0 -z-10"
               )}
             >
@@ -139,8 +122,24 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
               >
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
-              copied!
             </div>
+          </button>
+
+          <button
+            disabled={!selectedColor}
+            onClick={() => selectedColor && copy(selectedColor, true)}
+            className="bg-gray-2 border border-gray-7 rounded-md hover:border-gray-8 flex relative overflow-hidden justify-between items-center shadow-inner flex-grow pl-2 pr-2 py-1 text-sm"
+          >
+            <span>{selectedColor || "#......"}</span>
+
+            {selectedColor && (
+              <div
+                className="w-4 h-4 rounded shadow ring-1 ring-zinc-500 transition-colors duration-300"
+                style={{
+                  backgroundColor: selectedColor,
+                }}
+              />
+            )}
           </button>
         </div>
       </div>
@@ -157,10 +156,8 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
                     key={color.color}
                     onClick={() => selectColor(color.color)}
                     className={classnames(
-                      "w-6 h-6 rounded-md shadow hover:ring-2 active:ring-4 hover:ring-amber-400 transition-shadow duration-300",
-                      selectedColor === color.color
-                        ? "ring-2 ring-amber-500"
-                        : "ring-1 ring-zinc-500"
+                      "w-6 h-6 bg-gray-3 border border-gray-7 rounded-md hover:bg-gray-4 hover:border-gray-8 transition-colors duration-300",
+                      selectedColor === color.color ? "ring-2 ring-amber-7" : ""
                     )}
                     style={{
                       backgroundColor: color.color,
@@ -174,7 +171,7 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
                 setColors({});
                 localStorage.setItem("droppl.palette", "{}");
               }}
-              className="w-6 h-6 ring-1 ring-zinc-500 text-zinc-500 hover:text-amber-400 flex flex-col justify-center items-center rounded-md shadow hover:ring-2 active:ring-4 hover:ring-amber-400 transition-all duration-300"
+              className="w-6 h-6 flex flex-col justify-center items-center bg-gray-3 border border-gray-7 rounded-md hover:bg-gray-4 hover:border-gray-8 transition-colors duration-300"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -198,7 +195,7 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
         </div>
       )}
 
-      <div className="relative py-1 px-2 border-t bg-amber-300 text-amber-900 shadow-inner text-[0.65rem] transition-colors duration-300 border-amber-400">
+      <div className="relative py-1 px-2 border-t bg-amber-9 text-amber-12 shadow-inner text-[0.65rem] transition-colors duration-300 border-amber-6">
         droppl, 0.0.1
       </div>
     </div>

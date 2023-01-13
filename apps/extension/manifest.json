@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Droppl",
   "description": "Simple color picker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icons": {
     "16": "icons/extension_icon@16px.png",
     "32": "icons/extension_icon@32px.png",

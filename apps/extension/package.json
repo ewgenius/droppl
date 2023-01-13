@@ -1,6 +1,6 @@
 {
   "name": "extension",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "scripts": {
     "build": "rm -rf dist && parcel build manifest.json --config @parcel/config-webextension",
@@ -12,10 +12,12 @@
   "license": "ISC",
   "devDependencies": {
     "@parcel/config-webextension": "^2.8.0",
+    "@radix-ui/colors": "^0.1.8",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "parcel": "^2.8.0",
     "postcss": "^8.4.19",
+    "tailwind": "workspace:*",
     "tailwindcss": "^3.2.4"
   },
   "dependencies": {
