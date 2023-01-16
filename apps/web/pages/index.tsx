@@ -18,6 +18,7 @@ function inverseColor(color: string) {
 }
 
 function hex2rgb(hex: string) {
+  console.log(hex);
   const r16 = hex.slice(1, 2);
   const g16 = hex.slice(2, 3);
   const b16 = hex.slice(3, 4);
