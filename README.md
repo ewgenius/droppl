@@ -1,5 +1,5 @@
 <div style="text-align:center">
-  <img width="64" height="64" src="apps/web/public/android-chrome-512x512.png" />
+  <img style="border-radius: 4px;" src="assets/cover.png" />
 </div>
 
 # Droppl - Simple color picker for Chrome
