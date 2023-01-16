@@ -32,12 +32,12 @@ function hex2rgb(hex: string) {
 export default function Web() {
   const [unsupported, setUnsupported] = useState(false);
   const [showPicker, setShowPicker] = useState(true);
-  const [colors, setColors] = useState<Array<string>>(["#000000"]);
+  const [colors, setColors] = useState<Array<string>>(["000000"]);
 
   useEffect(() => {
-    const color = getComputedStyle(document.documentElement).getPropertyValue(
-      "--color"
-    ).trim();
+    const color = getComputedStyle(document.documentElement)
+      .getPropertyValue("--color")
+      .trim();
 
     setColors([(color.startsWith("#") ? color.slice(1) : color).toUpperCase()]);
 
@@ -99,7 +99,7 @@ export default function Web() {
               animationTimingFunction: "ease-out",
             }}
           >
-            <App onChange={onChange} onPick={onPick} />
+            <App onChange={onChange} onPick={onPick} version="0.0.3" />
           </div>
 
           <header className="flex flex-col gap-8 lg:flex-row md:items-center justify-center">
@@ -206,18 +206,74 @@ export default function Web() {
             </div>
           </header>
 
-          {
-            <div
-              className={`p-4 absolute bottom-0 m-2 transition-all ${
-                unsupported
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-32"
-              } duration-300 rounded-lg bg-white text-black text-sm mt-8`}
+          <div className="mt-12 flex gap-2">
+            <a
+              className="flex justify-center items-center text-md px-3 py-2 gap-2 border rounded-md opacity-60 hover:opacity-100 transition-opacity duration-300"
+              style={{
+                color: "var(--color)",
+                borderColor: "var(--color)",
+                backgroundColor: "var(--color-inverse)",
+              }}
+              href="https://chrome.google.com/webstore/detail/droppl/fippmihelmgjffaaelmikjiikapeheoa"
             >
-              Note: The extension uses an experimental API, so only
-              Chromium-based browsers are supported.
-            </div>
-          }
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="w-5 h-5"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="4"></circle>
+                <line x1="21.17" y1="8" x2="12" y2="8"></line>
+                <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
+                <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
+              </svg>
+              Install
+            </a>
+
+            <a
+              className="flex justify-center items-center text-md px-3 py-2 gap-2 border rounded-md opacity-60 hover:opacity-100 transition-opacity duration-300"
+              style={{
+                color: "var(--color)",
+                borderColor: "var(--color)",
+              }}
+              href="https://github.com/ewgenius/droppl"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="w-5 h-5"
+              >
+                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                <path d="M9 18c-4.51 2-5-2-7-2"></path>
+              </svg>
+              GitHub
+            </a>
+          </div>
+
+          <div
+            className={`p-4 absolute bottom-0 m-2 transition-all ${
+              unsupported
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-32"
+            } duration-300 rounded-lg bg-white text-black text-sm mt-8`}
+          >
+            Note: The extension uses an experimental API, so only Chromium-based
+            browsers are supported.
+          </div>
         </main>
       </div>
     </>
