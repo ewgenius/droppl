@@ -238,7 +238,7 @@ export default function Web() {
             </div>
           </header>
 
-          <div className="mt-12 flex gap-2">
+          <div className="mt-20 md:mt-12 flex gap-2">
             <a
               className="flex justify-center items-center text-md px-3 py-2 gap-2 border rounded-md opacity-60 hover:opacity-100 transition-opacity duration-300"
               style={{
