@@ -246,6 +246,7 @@ export default function Web() {
               style={{
                 color: "var(--color)",
                 borderColor: "var(--color)",
+                backgroundColor: "var(--color-inverse)",
               }}
               href="https://github.com/ewgenius/droppl"
             >
