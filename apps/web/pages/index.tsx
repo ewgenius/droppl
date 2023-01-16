@@ -18,10 +18,13 @@ function inverseColor(color: string) {
 }
 
 function hex2rgb(hex: string) {
-  console.log(hex);
-  const r16 = hex.slice(1, 2);
-  const g16 = hex.slice(2, 3);
-  const b16 = hex.slice(3, 4);
+  const value =
+    hex.length === 3
+      ? hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2]
+      : hex;
+  const r16 = value.slice(1, 2);
+  const g16 = value.slice(2, 3);
+  const b16 = value.slice(3, 4);
 
   const r = parseInt(r16 + r16, 16);
   const g = parseInt(g16 + g16, 16);
