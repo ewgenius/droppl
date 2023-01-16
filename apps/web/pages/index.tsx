@@ -84,10 +84,38 @@ export default function Web() {
     }
   };
 
+  const title = "Droppl";
+  const description =
+    "Simple color picker based on Chrome native EyeDropper API. Allows to pick and copy color from anywhere on your screen (even outside of the browser window) and keep it in palette for easy access.";
+  const image = "https://www.droppl.app/cover.png";
+
   return (
     <>
       <Head>
-        <title>Droppl</title>
+        <title>{title}</title>
+        <meta content={title} property="og:title" />
+        <meta content={title} property="twitter:title" />
+        <meta content={title} itemProp="name" />
+
+        <meta content={description} name="description" />
+        <meta content={description} property="og:description" />
+        <meta content={description} itemProp="description" />
+        <meta content={description} property="twitter:description" />
+
+        <meta itemProp="image" content={image} />
+        <meta property="twitter:image" content={image} />
+        <meta property="og:image" content={image} />
+        <meta
+          property="twitter:image:alt"
+          content="Cover image for droppl.app"
+        />
+        <meta property="og:image:alt" content="Cover image for droppl.app" />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:creator" content="@ewgeniux" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="droppl.app" />
+        <meta property="og:url" content="https://www.droppl.app/" />
       </Head>
 
       <div className="min-h-screen transition-colors duration-300">
