@@ -3,13 +3,14 @@ import { FC, useCallback, useEffect, useState } from "react";
 export interface AppProps {
   onPick?: () => void;
   onChange?: (color?: string) => void;
+  version?: string;
 }
 
 function classnames(...classes: Array<string | null | undefined | boolean>) {
   return classes.filter(Boolean).join(" ");
 }
 
-export const App: FC<AppProps> = ({ onPick, onChange }) => {
+export const App: FC<AppProps> = ({ onPick, onChange, version = "0.0.1" }) => {
   const [copied, setCopied] = useState(false);
   const [colors, setColors] = useState<
     Record<string, { color: string; order: number }>
@@ -128,7 +129,7 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
           <button
             disabled={!selectedColor}
             onClick={() => selectedColor && copy(selectedColor, true)}
-            className="bg-gray-2 border border-gray-7 rounded-md hover:border-gray-8 flex relative overflow-hidden justify-between items-center shadow-inner flex-grow pl-2 pr-2 py-1 text-sm"
+            className="bg-gray-2 border border-gray-7 rounded-md hover:border-gray-8 flex relative overflow-hidden justify-between items-center shadow-inner flex-grow pl-2 pr-2 py-1 text-sm transition-colors duration-300"
           >
             <span>{selectedColor || "#......"}</span>
 
@@ -196,7 +197,7 @@ export const App: FC<AppProps> = ({ onPick, onChange }) => {
       )}
 
       <div className="relative py-1 px-2 border-t bg-amber-9 text-amber-12 shadow-inner text-[0.65rem] transition-colors duration-300 border-amber-6">
-        droppl, 0.0.1
+        droppl, {version}
       </div>
     </div>
   );
