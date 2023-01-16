@@ -84,7 +84,7 @@ export default function Web() {
     }
   };
 
-  const title = "Droppl";
+  const title = "Droppl - Simple color picker for Chrome";
   const description =
     "Simple color picker based on Chrome native EyeDropper API. Allows to pick and copy color from anywhere on your screen (even outside of the browser window) and keep it in palette for easy access.";
   const image = "https://www.droppl.app/cover.png";
@@ -92,7 +92,7 @@ export default function Web() {
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>Droppl</title>
         <meta content={title} property="og:title" />
         <meta content={title} property="twitter:title" />
         <meta content={title} itemProp="name" />
